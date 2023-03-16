@@ -15,7 +15,7 @@ import Layout from "../layouts/Layout.astro";
       <li><a href="/contact">Contact</a></li>
     </ul>
   </nav>
-  <main>
+  <main class="flex flex-col gap-2">
     <section class="mx-auto max-w-4xl">
       <p class="text-2xl">I'm</p>
       <h1
@@ -34,6 +34,88 @@ import Layout from "../layouts/Layout.astro";
         to use it to solve problems. Alwways trill to work with amazing people
         and learn new things.
       </p>
+    </section>
+    <section>
+      <h2 class="text-4xl">Projects</h2>
+      <ul class="grid grid-cols-1 gap-4">
+        <li>
+          <h3 class="text-2xl">Legal Document Automation Tool</h3>
+          <p>
+            My first project as a software developer. I was a solo developer on
+            charge of the development of a web application that allows lawyers
+            to generate word documents with the information of their clients. I
+            was responsible for the development of the backend and frontend,
+            testing, and deployment. Definitely a great and challenging
+            experience that I'm glad I had.
+          </p>
+          <ul class="grid grid-cols-1 gap-4">
+            <li>Javascript</li>
+            <li>CSS</li>
+            <li>ASP.NET</li>
+            <li>C#</li>
+            <li>SQL Server</li>
+          </ul>
+        </li>
+        <li>
+          <h3 class="text-2xl">E-Invoicing Service</h3>
+          <p>
+            Another big solo project. This time I was in charge of the full
+            development of a web application that allows companies to generate
+            invoices and send them to their clients. I was responsible for the
+            development of the backend and frontend, testing, and deployment.
+            The app have to use the Costa Rican government API to generate the
+            invoices and send them to the clients, saving the invoices in for a
+            period of time. This is the project that I'm most proud of because
+            here is were I decided to never stop learning. This was my
+            introduction to the world of modern web development with React.
+          </p>
+          <ul class="grid grid-cols-1 gap-4">
+            <li>React</li>
+            <li>Express.js</li>
+            <li>Node.js</li>
+            <li>MongoDB</li>
+          </ul>
+        </li>
+        <li>
+          <h3 class="text-2xl">Real-Time Sports Betting Comparison</h3>
+          <p>
+            I built multiple web applications for a sports betting companies.
+            This time I wasn't alone, I was part of different teams with
+            different levels of experience. Our team was in charge of the
+            development of a web application that allows users to compare the
+            odds of different sports betting companies in real-time. I was
+            responsible for the development of the frontend. I learned a lot
+            about React and GraphQL in this project and way more about teamwork,
+            so much that I ended up being the team lead.
+          </p>
+          <ul class="grid grid-cols-1 gap-4">
+            <li>React</li>
+            <li>GraphQL</li>
+            <li>Node.js</li>
+            <li>MongoDB</li>
+            <li>Redis</li>
+            <li>Socket.io</li>
+            <li>PostgreSQL</li>
+          </ul>
+        </li>
+        <li>
+          <h3 class="text-2xl">Talent Suggestion Web App</h3>
+          <p>
+            I worked as a Full stack developer on a Web app what suggest talent
+            to companies. I was responsible for the development of the frontend
+            and backend. As team we started diggin into the world of Graph DB
+            and how to use them to solve and improve suggestions. I learned a
+            lot about Graph DB and Neo4j in this project.
+          </p>
+          <ul class="grid grid-cols-1 gap-4">
+            <li>React</li>
+            <li>GraphQL</li>
+            <li>Hasura</li>
+            <li>Node.js</li>
+            <li>Neo4j</li>
+          </ul>
+        </li>
+      </ul>
     </section>
   </main>
 </Layout>
