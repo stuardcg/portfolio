@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.stuardcg.dev/sitemap-index.xml
+Sitemap: https://stuardcg.dev/sitemap-index.xml

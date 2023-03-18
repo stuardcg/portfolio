@@ -1,5 +1,6 @@
 ---
 export interface Props {
+  id: string;
   title: string;
   subtitle: string;
   description: string;
@@ -8,10 +9,12 @@ export interface Props {
   imagePosition?: "left" | "right";
 }
 
-const { title, subtitle, description } = Astro.props;
+const { id, title, subtitle, description } = Astro.props;
 ---
 
-<div
+<section
+  id={id}
+  aria-label={title}
   class="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0"
 >
   <div class="absolute inset-0 -z-10 overflow-hidden">
@@ -52,11 +55,11 @@ const { title, subtitle, description } = Astro.props;
       <div class="lg:pr-4">
         <div class="lg:max-w-lg">
           <h3
-            class="mt-2 text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl"
+            class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
           >
             {title}
           </h3>
-          <p class="mt-6 text-xl leading-8 text-neutral-700">
+          <p class="mt-6 text-xl leading-8 text-gray-700">
             {subtitle}
           </p>
         </div>
@@ -82,4 +85,4 @@ const { title, subtitle, description } = Astro.props;
       </div>
     </div>
   </div>
-</div>
+</section>
