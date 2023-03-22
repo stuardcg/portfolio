@@ -14,7 +14,7 @@ const { id, title, subtitle, description } = Astro.props;
 
 <section
   id={id}
-  aria-label={title}
+  aria-labelledby={`${id}-title ${id}-subtitle`}
   class="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0"
 >
   <div class="absolute inset-0 -z-10 overflow-hidden">
@@ -55,11 +55,12 @@ const { id, title, subtitle, description } = Astro.props;
       <div class="lg:pr-4">
         <div class="lg:max-w-lg">
           <h3
+            id={`${id}-title`}
             class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
           >
             {title}
           </h3>
-          <p class="mt-6 text-xl leading-8 text-gray-700">
+          <p id={`${id}-subtitle`} class="mt-6 text-xl leading-8 text-gray-700">
             {subtitle}
           </p>
         </div>
