@@ -1,0 +1,61 @@
+---
+interface Props {
+	/** text shown in the window title bar, e.g. "stuard@local · ~/about" */
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<div class="terminal">
+	<div class="terminal-head">
+		<span>{title}</span>
+		<div class="terminal-dots" aria-hidden="true">
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<div class="terminal-body">
+		<slot />
+	</div>
+</div>
+
+<style>
+	.terminal {
+		background: var(--surface);
+		border: 1px solid var(--rule);
+		font-family: var(--font-mono);
+		font-size: 13px;
+		line-height: 1.7;
+		color: var(--strong);
+		overflow: hidden;
+	}
+
+	.terminal-head {
+		background: var(--elevated);
+		padding: 8px 14px;
+		font-size: 11px;
+		color: var(--faint);
+		letter-spacing: 0.15em;
+		border-bottom: 1px solid var(--rule);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.terminal-dots {
+		display: flex;
+		gap: 6px;
+	}
+
+	.terminal-dots span {
+		width: 8px;
+		height: 8px;
+		background: var(--rule);
+	}
+
+	.terminal-body {
+		padding: 24px 26px;
+	}
+</style>

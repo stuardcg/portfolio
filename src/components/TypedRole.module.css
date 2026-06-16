@@ -1,0 +1,18 @@
+.role {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	min-height: 24px;
+	margin-bottom: 36px;
+	font-family: var(--font-mono);
+	font-size: 16px;
+	color: var(--muted);
+}
+
+.prompt {
+	color: var(--accent-soft);
+}
+
+.text {
+	color: var(--strong);
+}

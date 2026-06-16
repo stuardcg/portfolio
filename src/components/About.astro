@@ -1,0 +1,126 @@
+---
+import Section from "./Section.astro";
+import Terminal from "./Terminal.astro";
+import { PORTFOLIO_DATA } from "../data/portfolio";
+---
+
+<Section id="about" index="// 02 ── ABOUT" title="whoami">
+	<div class="about-grid">
+		<Terminal title={`${PORTFOLIO_DATA.handle}@local · ~/about`}>
+			{
+				PORTFOLIO_DATA.about.map((line) => {
+					if (line.type === "cmd")
+						return (
+							<p class="line">
+								<span class="prompt">~ ❯</span>
+								<span class="cmd">{line.text}</span>
+							</p>
+						);
+					if (line.type === "out")
+						return (
+							<p class="line">
+								<span class="out">{line.text}</span>
+							</p>
+						);
+					if (line.type === "kv")
+						return (
+							<p class="line">
+								<span class="key">{line.k}</span>
+								<span class="out">{line.v}</span>
+							</p>
+						);
+					return <div class="spacer" />;
+				})
+			}
+			<p class="line">
+				<span class="prompt">~ ❯</span>
+				<span class="cursor idle-cursor" aria-hidden="true"></span>
+			</p>
+		</Terminal>
+
+		<div class="stack-card">
+			<h4>// STACK · CURRENT</h4>
+			<ul class="stack-tags">
+				{PORTFOLIO_DATA.stack.map((tech) => <li class="tag">{tech}</li>)}
+			</ul>
+		</div>
+	</div>
+</Section>
+
+<style>
+	.about-grid {
+		display: grid;
+		grid-template-columns: 1.4fr 1fr;
+		gap: 24px;
+	}
+
+	@media (max-width: 900px) {
+		.about-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.line {
+		margin: 0;
+		padding: 0;
+	}
+
+	.prompt {
+		color: var(--faint);
+		margin-right: 8px;
+	}
+
+	.cmd {
+		color: var(--accent);
+	}
+
+	.out {
+		color: var(--muted);
+	}
+
+	.key {
+		color: var(--strong);
+		margin-right: 14px;
+	}
+
+	.spacer {
+		height: 14px;
+	}
+
+	.idle-cursor {
+		vertical-align: middle;
+	}
+
+	.stack-card {
+		border: 1px solid var(--rule);
+		background: var(--surface);
+		padding: 24px;
+	}
+
+	.stack-card h4 {
+		font-family: var(--font-mono);
+		font-size: 11px;
+		color: var(--faint);
+		letter-spacing: 0.2em;
+		margin: 0 0 18px;
+		font-weight: 500;
+	}
+
+	.stack-tags {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+
+	.tag {
+		font-family: var(--font-mono);
+		font-size: 12px;
+		color: var(--strong);
+		border: 1px solid var(--rule);
+		background: var(--base);
+		padding: 6px 10px;
+	}
+</style>

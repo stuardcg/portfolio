@@ -1,0 +1,13 @@
+---
+import Section from "./Section.astro";
+import { PORTFOLIO_DATA } from "../data/portfolio";
+import ProjectList from "./ProjectList";
+---
+
+{
+	PORTFOLIO_DATA.projects.length > 0 && (
+		<Section id="projects" index="// 03 ── PROJECTS · SELECTED" title="ls ./work">
+			<ProjectList client:visible projects={PORTFOLIO_DATA.projects} />
+		</Section>
+	)
+}

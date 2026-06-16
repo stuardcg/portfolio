@@ -1,25 +1,55 @@
 ---
-import ContentSide from "../components/ContentSide.astro";
-import Hero from "../components/Hero.astro";
-import ProjectsHeader from "../components/ProjectsHeader.astro";
 import Layout from "../layouts/Layout.astro";
+import About from "../components/About.astro";
+import Chrome from "../components/Chrome";
+import Footer from "../components/Footer.astro";
+import Hero from "../components/Hero.astro";
+import Projects from "../components/Projects.astro";
+import SideRail from "../components/SideRail.astro";
+import StatusBar from "../components/StatusBar";
+import { PORTFOLIO_DATA } from "../data/portfolio";
 ---
 
-<Layout
-  title="Stuard's Portfolio"
-  description="Stuard Gerardo Carrillo Gonzales's portfolio, experience, and projects."
->
-  <main class="flex flex-col">
-    <Hero />
-    <ProjectsHeader />
-    <ContentSide
-      id="legal-document-automation-tool"
-      title="A Legal Document Automation Tool"
-      subtitle="A legal document automation tool that helps you create legal documents in minutes."
-      description="My first project as a software developer. I was a solo developer on charge of the development of a web application that allows lawyers to generate word documents with the information of their clients. I was responsible for the development of the backend and frontend, testing, and deployment. Definitely a great and challenging experience that I'm glad I had."
-      image=""
-      imageAlt=""
-      imagePosition="right"
-    />
-  </main>
+<Layout title={`${PORTFOLIO_DATA.name} · ${PORTFOLIO_DATA.role}`}>
+	<StatusBar
+		client:load
+		node={PORTFOLIO_DATA.node}
+		status={PORTFOLIO_DATA.status}
+		coords={PORTFOLIO_DATA.location.coords}
+		timezone={PORTFOLIO_DATA.location.timezone}
+		utcOffset={PORTFOLIO_DATA.location.utcOffset}
+	/>
+	<SideRail />
+	<div class="app-shell">
+		<main class="main">
+			<Hero />
+			<About />
+			<Projects />
+			<Footer />
+		</main>
+	</div>
+	<Chrome client:load name={PORTFOLIO_DATA.name} commands={PORTFOLIO_DATA.commands} />
 </Layout>
+
+<style>
+	.app-shell {
+		padding: 28px 0 28px 56px;
+		min-height: 100vh;
+	}
+
+	.main {
+		max-width: 1240px;
+		margin: 0 auto;
+		padding: 0 56px;
+	}
+
+	@media (max-width: 720px) {
+		.app-shell {
+			padding-left: 0;
+		}
+
+		.main {
+			padding: 0 24px;
+		}
+	}
+</style>

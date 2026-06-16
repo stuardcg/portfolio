@@ -1,0 +1,200 @@
+/* ============================================================
+   Global stylesheet — intentionally minimal.
+
+   Lives here: design tokens, the base reset, and the few
+   primitives shared across Astro components and React islands.
+   Everything component-specific lives next to its component,
+   in an .astro <style> block or a *.module.css file.
+   ============================================================ */
+
+/* === Design tokens === */
+
+:root {
+	/* Default palette: Midnight */
+	--base: #0a0e14;
+	--surface: #0f1419;
+	--elevated: #161c24;
+	--strong: #c5d1de;
+	--muted: #8b97a5;
+	--faint: #5a6470;
+	--rule: #1c242e;
+	--accent: oklch(72% 0.085 205);
+	--accent-soft: oklch(50% 0.06 205);
+	--warn: oklch(70% 0.11 30);
+	--ok: oklch(72% 0.09 150);
+
+	--font-sans: "Space Grotesk", system-ui, sans-serif;
+	--font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+[data-palette="ember"] {
+	--base: #100e0b;
+	--surface: #161310;
+	--elevated: #1f1a15;
+	--strong: #d4cab8;
+	--muted: #998c75;
+	--faint: #635a4b;
+	--rule: #251f18;
+	--accent: oklch(74% 0.09 60);
+	--accent-soft: oklch(50% 0.06 60);
+	--warn: oklch(70% 0.1 25);
+	--ok: oklch(70% 0.08 130);
+}
+
+[data-palette="slate"] {
+	--base: #0c1014;
+	--surface: #11161c;
+	--elevated: #1a2129;
+	--strong: #b8c4cf;
+	--muted: #7d8995;
+	--faint: #4f5862;
+	--rule: #1d242c;
+	--accent: oklch(70% 0.075 185);
+	--accent-soft: oklch(48% 0.05 185);
+	--warn: oklch(68% 0.1 320);
+	--ok: oklch(70% 0.08 160);
+}
+
+[data-palette="bone"] {
+	--base: #ebe6dc;
+	--surface: #e2dccf;
+	--elevated: #d6cebd;
+	--strong: #1a1814;
+	--muted: #4a4639;
+	--faint: #74705f;
+	--rule: #c4bca9;
+	--accent: oklch(48% 0.1 25);
+	--accent-soft: oklch(60% 0.06 25);
+	--warn: oklch(55% 0.1 50);
+	--ok: oklch(50% 0.09 150);
+}
+
+/* === Reset === */
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	background: var(--base);
+	color: var(--strong);
+	font-family: var(--font-sans);
+	font-feature-settings: "ss01", "cv11";
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+body {
+	min-height: 100vh;
+	overflow-x: hidden;
+}
+
+/* === Shared primitives === */
+
+/* Blinking terminal cursor — used by the TypedRole island and the
+   About terminal. */
+.cursor {
+	display: inline-block;
+	width: 8px;
+	height: 16px;
+	background: var(--strong);
+	margin-left: 2px;
+	animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+	0%,
+	50% {
+		opacity: 1;
+	}
+	51%,
+	100% {
+		opacity: 0;
+	}
+}
+
+/* Glitch hover effect — used by the Hero, Projects, and Footer
+   headlines. Global on purpose: the "toggle · glitch" palette
+   command disables it site-wide via `no-glitch` on <body>. */
+.glitch {
+	position: relative;
+	display: inline-block;
+}
+
+.glitch:hover::before,
+.glitch:hover::after {
+	content: attr(data-text);
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+.glitch:hover::before {
+	color: var(--accent);
+	transform: translate(-2px, 0);
+	clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+	opacity: 0.85;
+	animation: glitch-a 600ms steps(2) infinite;
+}
+
+.glitch:hover::after {
+	color: var(--warn);
+	transform: translate(2px, 0);
+	clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+	opacity: 0.7;
+	animation: glitch-b 600ms steps(2) infinite;
+}
+
+.no-glitch .glitch:hover::before,
+.no-glitch .glitch:hover::after {
+	content: none;
+}
+
+@keyframes glitch-a {
+	0% {
+		transform: translate(-2px, 0);
+	}
+	50% {
+		transform: translate(-1px, -1px);
+	}
+	100% {
+		transform: translate(-2px, 0);
+	}
+}
+
+@keyframes glitch-b {
+	0% {
+		transform: translate(2px, 0);
+	}
+	50% {
+		transform: translate(1px, 1px);
+	}
+	100% {
+		transform: translate(2px, 0);
+	}
+}
+
+/* === Browser chrome === */
+
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+::-webkit-scrollbar-track {
+	background: var(--base);
+}
+::-webkit-scrollbar-thumb {
+	background: var(--elevated);
+	border: 2px solid var(--base);
+}
+::-webkit-scrollbar-thumb:hover {
+	background: var(--rule);
+}
+
+::selection {
+	background: var(--accent);
+	color: var(--base);
+}

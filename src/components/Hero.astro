@@ -1,89 +1,248 @@
-<header
-  id="header"
-  aria-labelledby="ht hp"
-  class="relative isolate overflow-hidden bg-slate-900"
->
-  <div class="mx-auto max-w-7xl pt-8 sm:pt-20 lg:flex lg:px-8 lg:pt-0">
-    <div
-      class="mx-auto max-w-2xl flex-shrink-0 px-6 lg:mx-0 lg:max-w-xl lg:pt-40"
-    >
-      <p class="text-lg font-bold leading-8 text-slate-300">I'm</p>
-      <h1
-        id="ht"
-        class="mt-6 text-4xl font-bold tracking-tight text-white sm:text-6xl"
-      >
-        Stuard Carrillo Gonzalez
-      </h1>
-      <p id="hp" class="mt-6 text-lg leading-8 text-slate-300">
-        Costarican software developer trilled to work with amazing people and
-        put my skills on fire.
-      </p>
-      <div class="mt-10 flex items-center gap-x-6">
-        <a
-          href="/stuard-carrillo-gonzalez-cv.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-blue-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-        >
-          Download my CV
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="h-6 w-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="animate-bounce"
-              d="M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"></path>
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5"
-            ></path>
-          </svg>
-        </a>
-        <a
-          href="mailto:stuard.cg@icloud.com"
-          class="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-blue-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-        >
-          Contact me
-        </a>
-      </div>
-    </div>
-    <div
-      class="mx-auto mt-4 flex max-w-2xl sm:mt-12 lg:mx-0 lg:mt-0 lg:max-w-none lg:flex-none"
-    >
-      <div class="max-w-3xl flex-none sm:max-w-5xl lg:max-w-none">
-        <picture>
-          <source
-            srcset="https://ik.imagekit.io/stuardcg/tr:w-380,h-380,fo-auto/stuard_portrait 380w,
-            https://ik.imagekit.io/stuardcg/tr:w-640,h-640,fo-auto/stuard_portrait 640w"
-            media="(max-width: 639px)"
-            sizes="(max-width: 380px) 100vw, 100vw"
-          />
-          <source
-            srcset="https://ik.imagekit.io/stuardcg/tr:w-640,h-640,fo-auto/stuard_portrait 640w"
-            media="(max-width: 768px)"
-          />
-          <source
-            srcset="https://ik.imagekit.io/stuardcg/tr:ar-4-3,w-768,fo-auto/stuard_portrait 768w"
-            media="(max-width: 1023px)"
-          />
-          <source
-            srcset="https://ik.imagekit.io/stuardcg/tr:w-640,h-640,fo-auto/stuard_portrait 640w"
-            media="(min-width: 1024px)"
-            sizes="640px"
-          />
-          <img
-            src="https://ik.imagekit.io/stuardcg/stuard_portrait"
-            alt="Stuard Carrillo Gonzalez Portrait"
-          />
-        </picture>
-      </div>
-    </div>
-  </div>
-</header>
+---
+import { ASCII_HUSKY, PORTFOLIO_DATA } from "../data/portfolio";
+import TypedRole from "./TypedRole";
+
+const { name, initials, role, availability, statusLabel, focus, craft, location, contact } =
+	PORTFOLIO_DATA;
+
+const [firstName, ...rest] = name.split(" ");
+const lastName = rest.join(" ");
+
+const label = `${initials} // ${role.toUpperCase()} · ${availability}`;
+
+const meta = [
+	{ k: "// FOCUS", v: focus },
+	{ k: "// CRAFT", v: craft },
+	{ k: "// STATUS", v: `● ${statusLabel}`, ok: true },
+	{ k: "// BASE", v: `Remote · ${location.timezone}` },
+];
+
+const husky = ASCII_HUSKY.replace(/^\n/, "");
+
+const stripProto = (url: string) => url.replace(/^https?:\/\//, "");
+
+const channels = [
+	{ label: stripProto(contact.github), href: contact.github, external: true },
+	{ label: stripProto(contact.linkedin), href: contact.linkedin, external: true },
+	{ label: contact.email, href: `mailto:${contact.email}`, external: false },
+];
+---
+
+<section id="hero" class="hero">
+	<div>
+		<div class="label">{label}</div>
+		<h1 class="name">
+			<span class="glitch" data-text={firstName}>{firstName}</span>
+			<br />
+			<span class="accent glitch" data-text={`${lastName}.`}
+				>{lastName}<span class="period">.</span></span
+			>
+		</h1>
+		<TypedRole client:load roles={PORTFOLIO_DATA.roles} />
+		<dl class="meta">
+			{
+				meta.map((item) => (
+					<div class="meta-item">
+						<dt class="k">{item.k}</dt>
+						<dd class={`v ${item.ok ? "ok" : ""}`}>{item.v}</dd>
+					</div>
+				))
+			}
+		</dl>
+	</div>
+
+	<div class="aside">
+		<pre class="portrait">{husky}</pre>
+		<nav id="contact" class="channels" aria-label="Contact channels">
+			{
+				channels.map((c) => (
+					<a
+						class="channel"
+						href={c.href}
+						target={c.external ? "_blank" : undefined}
+						rel={c.external ? "noopener noreferrer" : undefined}
+					>
+						{c.label}
+					</a>
+				))
+			}
+			<a class="channel cv" href={contact.cv} download>download CV</a>
+		</nav>
+	</div>
+</section>
+
+<style>
+	.hero {
+		min-height: calc(100vh - 56px);
+		display: grid;
+		grid-template-columns: 1.3fr 1fr;
+		gap: 64px;
+		/* center the whole block in the viewport; stretch the columns to equal
+		   height so the name/terminal share a top edge and the meta/channels
+		   (pinned to the bottom of each column) share a bottom edge */
+		align-content: center;
+		align-items: stretch;
+		padding: 80px 0 60px;
+	}
+
+	.aside {
+		display: flex;
+		flex-direction: column;
+		/* lets the portrait font scale to the column width (see .portrait) */
+		container-type: inline-size;
+	}
+
+	:global([data-density="compact"]) .hero {
+		padding: 56px 0 40px;
+		min-height: auto;
+	}
+
+	@media (max-width: 900px) {
+		.hero {
+			grid-template-columns: 1fr;
+			gap: 32px;
+			padding: 48px 0;
+		}
+	}
+
+	.label {
+		font-family: var(--font-mono);
+		font-size: 11px;
+		color: var(--accent);
+		letter-spacing: 0.2em;
+		margin-bottom: 24px;
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
+	.label::before {
+		content: "";
+		width: 28px;
+		height: 1px;
+		background: var(--accent);
+	}
+
+	.name {
+		font-size: clamp(56px, 8vw, 112px);
+		font-weight: 600;
+		line-height: 0.92;
+		letter-spacing: -0.04em;
+		margin: 0 0 28px;
+		color: var(--strong);
+	}
+
+	.name .accent {
+		color: var(--accent);
+	}
+
+	.period {
+		color: var(--faint);
+	}
+
+	.meta {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 20px;
+		max-width: 480px;
+		margin: 28px 0 0;
+		padding-top: 28px;
+		border-top: 1px solid var(--rule);
+	}
+
+	.k {
+		font-family: var(--font-mono);
+		font-size: 10px;
+		color: var(--faint);
+		letter-spacing: 0.15em;
+		margin-bottom: 6px;
+	}
+
+	.v {
+		margin: 0;
+		font-size: 14px;
+		color: var(--strong);
+	}
+
+	.v.ok {
+		color: var(--ok);
+	}
+
+	.portrait {
+		margin: 0;
+		font-family: var(--font-mono);
+		/* the art is a fixed 60 columns; scale the font to the column width so
+		   it never overflows on narrow screens, capped at 10px on desktop */
+		font-size: clamp(5px, 2.15cqw, 10px);
+		line-height: 1.05;
+		color: var(--accent);
+		white-space: pre;
+		background: var(--surface);
+		padding: 24px;
+		border: 1px solid var(--rule);
+		position: relative;
+	}
+
+	.portrait::before {
+		content: "◢ PORTRAIT";
+		position: absolute;
+		top: -10px;
+		left: 16px;
+		background: var(--base);
+		padding: 0 8px;
+		font-size: 9px;
+		letter-spacing: 0.2em;
+		color: var(--faint);
+	}
+
+	.channels {
+		/* auto top margin pins the block to the bottom of the stretched
+		   column so it lines up with the meta block on the left */
+		margin-top: auto;
+		padding-top: 18px;
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		font-family: var(--font-mono);
+		font-size: 13px;
+	}
+
+	.channel {
+		width: fit-content;
+		padding: 6px 0;
+		color: var(--strong);
+		text-decoration: none;
+		position: relative;
+	}
+
+	.channel::after {
+		content: "↗";
+		margin-left: 8px;
+		display: inline-block;
+		color: var(--faint);
+		transition: transform 160ms;
+	}
+
+	.channel:hover {
+		color: var(--accent);
+	}
+
+	.channel:hover::after {
+		transform: translate(2px, -2px);
+		color: var(--accent);
+	}
+
+	.channel.cv {
+		margin-top: 14px;
+		color: var(--accent);
+		letter-spacing: 0.05em;
+	}
+
+	.channel.cv::after {
+		content: "↓";
+	}
+
+	.channel.cv:hover::after {
+		transform: translateY(2px);
+	}
+</style>

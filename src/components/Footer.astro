@@ -1,0 +1,36 @@
+---
+import { PORTFOLIO_DATA } from "../data/portfolio";
+
+const { name, version } = PORTFOLIO_DATA;
+---
+
+<footer class="footer">
+	<span>© 2026 {name}</span>
+	<span>// built with Astro · {version}</span>
+</footer>
+
+<style>
+	.footer {
+		margin-top: 80px;
+		padding: 28px 0 40px;
+		border-top: 1px solid var(--rule);
+		display: flex;
+		justify-content: space-between;
+		gap: 16px;
+		font-family: var(--font-mono);
+		font-size: 11px;
+		color: var(--faint);
+		letter-spacing: 0.1em;
+	}
+
+	:global([data-density="compact"]) .footer {
+		margin-top: 56px;
+	}
+
+	@media (max-width: 720px) {
+		.footer {
+			flex-direction: column;
+			gap: 8px;
+		}
+	}
+</style>
